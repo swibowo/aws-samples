@@ -1,0 +1,39 @@
+[
+    {
+      "volumesFrom": [],
+      "memory": 512,
+      "extraHosts": null,
+      "dnsServers": null,
+      "disableNetworking": null,
+      "dnsSearchDomains": null,
+      "portMappings": [
+        {
+          "hostPort": 8080,
+          "containerPort": 8080,
+          "protocol": "tcp"
+        }
+      ],
+      "hostname": null,
+      "essential": true,
+      "entryPoint": null,
+      "mountPoints": [],
+      "name": "ecs-main-node-service-container",
+      "ulimits": null,
+      "dockerSecurityOptions": null,
+      "environment": [],
+      "links": null,
+      "workingDirectory": null,
+      "readonlyRootFilesystem": null,
+      "image": "723293938384.dkr.ecr.ap-southeast-2.amazonaws.com/node-simple-app:latest",
+      "command": null,
+      "user": null,
+      "dockerLabels": null,
+      "logConfiguration": {
+        "logDriver": "json-file",
+        "options": null
+      },
+      "cpu": 0,
+      "privileged": null,
+      "memoryReservation": null
+    }
+]
