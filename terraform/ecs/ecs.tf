@@ -143,9 +143,10 @@ resource "aws_security_group" "ecs_lb" {
 
 resource "aws_security_group" "ecs_instances" {
   name = "ecs-instances"
-  description = "Internet facing, allow SSH only"
+  description = "EC2 instance sec group"
   vpc_id = "${aws_vpc.ecs_main.id}"
 
+  # This is for testing to be able to SSH into the box easily
   ingress {
     from_port = 22
     to_port = 22
@@ -176,10 +177,9 @@ resource "aws_launch_configuration" "ecs_main_cluster_launch" {
     instance_type = "t2.small"
     security_groups = ["${aws_security_group.ecs_instances.id}"]
     iam_instance_profile = "${aws_iam_instance_profile.ecs.name}"
-    # TODO: is there a good way to make the key configurable sanely?
     key_name = "${aws_key_pair.ecs_ssh_key.key_name}"
     associate_public_ip_address = true
-    user_data = "#!/bin/bash\necho ECS_CLUSTER=Main > /etc/ecs/ecs.config"
+    user_data = "#!/bin/bash\necho ECS_CLUSTER=${aws_ecs_cluster.ecs_main.name} > /etc/ecs/ecs.config"
 }
 
 resource "aws_autoscaling_group" "ecs_main_cluster" {
@@ -241,7 +241,7 @@ resource "aws_elb" "ecs_main_node_service_elb" {
     healthy_threshold = 3
     unhealthy_threshold = 2
     timeout = 3
-    target = "TCP:22"
+    target = "TCP:8080"
     interval = 5
   }
 }
